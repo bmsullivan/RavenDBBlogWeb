@@ -14,6 +14,7 @@ namespace RavenDBBlogWeb.App_Start
 
     using Raven.Client;
     using Raven.Client.Document;
+    using Raven.Client.Indexes;
 
     public static class NinjectWebCommon 
     {
@@ -63,6 +64,8 @@ namespace RavenDBBlogWeb.App_Start
                            };
 
             docStore.Initialize();
+
+            IndexCreation.CreateIndexes(typeof(Posts_PostsByTag).Assembly, docStore);
 
             kernel.Bind<IDocumentStore>().ToConstant(docStore).InSingletonScope();
             kernel.Bind<IDocumentSession>().ToMethod(c => c.Kernel.Get<IDocumentStore>().OpenSession()).InRequestScope();
