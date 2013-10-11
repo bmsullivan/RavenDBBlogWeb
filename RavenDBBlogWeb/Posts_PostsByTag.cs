@@ -5,6 +5,7 @@ using System.Web;
 
 namespace RavenDBBlogWeb
 {
+    using Raven.Abstractions.Indexing;
     using Raven.Client.Indexes;
 
     using RavenDBBlogWeb.Models;
@@ -25,6 +26,8 @@ namespace RavenDBBlogWeb
 
             	Reduce = results => results.GroupBy(r => r.Tag)
                 	.Select(g => new PostsByTagResult { Tag = g.Key, PostCount = g.Sum(r => r.PostCount) });
+
+                Sort(f => f.PostCount, SortOptions.Int);
         	}
     	}
 }

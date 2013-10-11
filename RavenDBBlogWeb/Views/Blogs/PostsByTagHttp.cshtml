@@ -1,0 +1,37 @@
+﻿@section scripts
+        {
+            <script type="text/javascript" src="~/Scripts/knockout-2.2.0.js"></script>
+            <script type="text/javascript">
+                $(function () {
+
+                    var vm = { results: {} };
+                    $.get('http://localhost:8080/indexes/Posts/PostsByTag?sort=-PostCount')
+                        .error(function (e) {
+                            alert('Error');
+                        })
+                        .done(function (ret) {
+                            vm.results = ret.Results;
+                            ko.applyBindings(vm);
+                        });
+
+
+                });
+            </script>
+        }
+        
+<h2>Posts by Tag</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Tag</th>
+            <th>Post Count</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: results">
+        <tr>
+            <td data-bind="text: Tag"></td>
+            <td data-bind="text: PostCount"></td>
+        </tr>
+    </tbody>
+</table>
+

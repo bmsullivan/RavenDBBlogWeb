@@ -33,5 +33,10 @@ namespace RavenDBBlogWeb.Controllers
             var results = _session.Query<PostsByTagResult, Posts_PostsByTag>();
             return View(results);
         }
+
+        public ActionResult PostsByTagHttp()
+        {
+            return View();
+        }
     }
 }
